@@ -1,44 +1,20 @@
-import React, { useEffect, useRef } from 'react';
-import { Grid } from '@material-ui/core';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-import { SpeechState, useSpeechContext } from "@speechly/react-client";
-import { PushToTalkButton, PushToTalkButtonContainer } from '@speechly/react-ui';
-
-import { Details, Main } from './components';
-import useStyles from './styles';
+import Home from "./Home";
+import Contact from "./Contact";
+import About from "./About";
 
 const App = () => {
-  const classes = useStyles();
-  const { speechState } = useSpeechContext();
-  const main = useRef(null)
-
-  const executeScroll = () => main.current.scrollIntoView()    
-
-  useEffect(() => {
-    if (speechState === SpeechState.Recording) {
-      executeScroll();
-    }
-  }, [speechState]);
-
   return (
     <div>
-      <Grid className={classes.grid} container spacing={0} alignItems="center" justify="center" style={{ height: '100vh'}}>
-        <Grid item xs={12} sm={4} className={classes.mobile}>
-          <Details title="Income" />
-        </Grid>
-        <Grid ref={main} item xs={12} sm={3} className={classes.main}>
-          <Main />
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.desktop}>
-          <Details title="Income" />
-        </Grid>
-        <Grid item xs={12} sm={4} className={classes.last}>
-          <Details title="Expense" />
-        </Grid>
-        <PushToTalkButtonContainer>
-          <PushToTalkButton />
-        </PushToTalkButtonContainer>
-      </Grid>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/aboutus" element={<About />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
